@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Etch-a-Sketch</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="container">
+        <button>CUSTOMIZE</button>
+        <div id = "space"></div>
+    </div>
+    <script>
+
+        function makeGrid(squareNumber){
+            // Make a grid with square length of squareSize
+            for (let i = 0; i < (squareNumber); i++) {
+                const row = document.createElement("div");
+                row.classList.add("row");
+                row.style.display = "flex";
+                container.appendChild(row);
+                for (let j = 0; j < (squareNumber); j++) {
+                    const square = document.createElement("div");
+                    square.classList.add("square");
+                    let squareLength = 960 / squareNumber
+                    console.log(squareLength);
+                    square.style.height = squareLength + "px";
+                    square.style.width = squareLength + "px";
+                    square.style.borderStyle = "solid";
+                    square.style.borderColor = "black";
+                    square.addEventListener("mouseover", () => {
+                        let red = Math.random() * 255;
+                        let green = Math.random() * 255;
+                        let blue = Math.random() * 255;
+                        square.style.backgroundColor = "rgb(" + red + "," + green + "," + blue + ")";
+                    });
+                    square.addEventListener("mouseout", () => {
+                        square.style.backgroundColor = "white";
+                    });
+                    row.appendChild(square);
+                }
+            }
+        }
+
+        function deleteGrid(){
+            // Delete grid assuming that it already exists
+            const rows = document.querySelectorAll(".row");
+            rows.forEach((row) => container.removeChild(row));
+        }
+
+        // Center grid
+        const container = document.getElementById("container");
+        container.style.display = "flex";
+        container.style.flexDirection = "column";
+        container.style.alignItems = "center";
+        let opacity = 1;
+        makeGrid(16);
+
+        // Make button
+        const button = document.querySelector("button");
+        button.addEventListener("click", () => {
+            let input = prompt("How many squares do you want per side on the new grid? ");
+            if(input > 100){
+                alert("Please enter a number lower than 100. ");
+            }
+            else{
+                deleteGrid(); 
+                makeGrid(input); 
+            }
+        });
+      
+    </script>
+  </body>
+</html>
